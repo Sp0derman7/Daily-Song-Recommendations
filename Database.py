@@ -59,4 +59,4 @@ def get_song(title):
 
 
 if __name__ == "__main__":
-    print("main")
+    get_song("Sunflower")
