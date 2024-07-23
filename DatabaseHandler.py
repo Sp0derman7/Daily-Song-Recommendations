@@ -49,8 +49,10 @@ def add_column(title, column_type):
             c.execute(f"ALTER TABLE Songs ADD COLUMN {title} {column_type};")
             conn.commit()
             print(f"Column '{title}' added successfully")
+
         except sqlite3.Error as error:
             print("Error: ", error)
+
         finally:
             if conn:
                 conn.close()
@@ -78,8 +80,10 @@ def remove_column(column_name):
 
         conn.commit()
         print(f"Column '{column_name}' removed successfully from the database")
+
     except sqlite3.Error as error:
         print('Error:', error)
+
     finally:
         if conn:
             conn.close()

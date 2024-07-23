@@ -4,26 +4,35 @@
     <title>Daily Song Recommendation</title>
     <style>
         body {
-            background-color:#333333;
-            align-content: center;
-            text-align: center
+            background-color: #333333;
+            font-family: Courier New, monospace;
         }
-        h1 {
+
+        img {
+            width: 25%;
+        }
+
+        .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+
+        h1, p {
             color:white;
             font-family:Courier New, monospace;
-            font-weight: lighter
+            font-weight: lighter;
+            margin: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Daily Song Recommendation</h1>
+    <h1 style="text-align:center">Daily Song Recommendation</h1>
     <hr>
-    <pre style="color:white; font-family:Courier New, monospace">
-        <img src="https://i.scdn.co/image/ab67616d0000b273e89fffbc825d52c018a2357e" width=25% alt="Sunflower.png">
-        Title
-        Artist
-        <br>
-        Time till next song
-    </pre>
+    <div class="content">
+        <img src="Song_Cover_Images/sunflower.jpeg" alt="Sunflower.png">
+        <p>Title<br>Artist</p>
+        <p>Time till next song</p>
+    </div>
 </body>
 </html>
