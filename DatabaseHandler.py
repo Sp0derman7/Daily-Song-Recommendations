@@ -27,7 +27,7 @@ def add_song(title, artist, time):
     try:
         conn = sqlite3.connect('Songs.db')
         c = conn.cursor()
-        c.execute(f"INSERT INTO Songs VALUES ('{title}', '{artist}', '{time}');")
+        c.execute(f"INSERT INTO Songs VALUES ('{title}', '{artist}', '{time}', 'Null', 'Null');")
         conn.commit()
         print("Record added successfully")
 
