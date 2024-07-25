@@ -110,4 +110,4 @@ def get_song(title):
 
 
 if __name__ == "__main__":
-    add_column("Date", "str")
+    add_column("Date", "TEXT")

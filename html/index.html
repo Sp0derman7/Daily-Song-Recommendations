@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Daily Song Recommendation</title>
+    <style>
+        body {
+            background-color: #333333;
+            font-family: Courier New, monospace;
+        }
+
+        img {
+            width: 25%;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1, p {
+            color: white;
+            font-family: Courier New, monospace;
+            font-weight: lighter;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align:center">Daily Song Recommendation</h1>
+<hr>
+<div class="content">
+    <img src="../static/Song_Cover_Images/{{ song_title }}.jpg" alt="{{ song_title}}.png">
+    <p>{{ song_title }}<br>{{ artist_name }}</p>
+    <p>Time till next song</p>
+</div>
+</body>
+</html>
