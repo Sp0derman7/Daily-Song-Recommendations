@@ -90,6 +90,10 @@ def remove_column(column_name):
             print("Connection closed")
 
 
+def set_date():
+    print("date")
+
+
 def get_song(title):
     conn = None
     try:
