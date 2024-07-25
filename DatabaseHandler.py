@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime, timedelta
 
 
 def create_table():
@@ -12,7 +13,7 @@ def create_table():
                         Time TEXT);""")
         print("Opened and created database successfully")
 
-    except sqlite3.Error as error:
+    except sqlite3.Error:
         print('Error in creating database')
 
     finally:
@@ -30,7 +31,7 @@ def add_song(title, artist, time):
         conn.commit()
         print("Record added successfully")
 
-    except sqlite3.Error as error:
+    except sqlite3.Error:
         print('Error in adding record')
 
     finally:
@@ -90,8 +91,26 @@ def remove_column(column_name):
             print("Connection closed")
 
 
-def set_date():
-    print("date")
+def set_date(date):
+    conn = None
+    try:
+        conn = sqlite3.connect("Songs.db")
+        c = conn.cursor()
+        c.execute("SELECT COUNT(*) FROM Songs;")
+        count = c.fetchone()[0]
+
+        for song in range(count):
+            date_song_release = (date + timedelta(days=song)).strftime("%Y-%m-%d")
+            c.execute("UPDATE Songs SET Date=? WHERE ID=?", (date_song_release, song + 1))
+        conn.commit()
+        print("Dates updated successfully")
+
+    except sqlite3.Error as error:
+        print("Error: ", error)
+
+    finally:
+        if conn:
+            conn.close()
 
 
 def get_song(title):
@@ -104,7 +123,7 @@ def get_song(title):
         for row in rows:
             print(row)
 
-    except sqlite3.Error as error:
+    except sqlite3.Error:
         print('Error in getting record')
 
     finally:
@@ -114,4 +133,4 @@ def get_song(title):
 
 
 if __name__ == "__main__":
-    add_column("Date", "TEXT")
+    set_date(datetime.today())
