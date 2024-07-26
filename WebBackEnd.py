@@ -87,5 +87,38 @@ def index():
                            min=minutes)
 
 
+def get_past_songs(current_date, current_time):
+    conn = None
+    try:
+        conn = sqlite3.connect('Songs.db')
+        c = conn.cursor()
+
+        c.execute("""SELECT Title, Artist, Date
+                     FROM Songs
+                     WHERE Date < ? OR (Date = ? AND Time < ?)
+                     ORDER BY Date DESC, Time DESC;""", (current_date, current_date, current_time))
+        rows = c.fetchall()
+        return rows
+    except sqlite3.Error as error:
+        print('Error in getting records:', error)
+        return []
+    finally:
+        if conn:
+            conn.close()
+
+
+@app.route("/about")
+def about():
+    return render_template('About_this_site.html')
+
+
+@app.route("/history")
+def history():
+    current_date = "2024-07-27"
+    current_time = "14:00"
+    past_songs = get_past_songs(current_date, current_time)
+    return render_template('History.html', past_songs=past_songs)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

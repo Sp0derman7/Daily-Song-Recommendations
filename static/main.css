@@ -1,0 +1,71 @@
+body {
+    background-color: #333333;
+    font-family: Courier New, monospace;
+}
+
+img {
+    width: 400px;
+    height: 400px;
+    padding: 30px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+h1, p, th, td {
+    color: white;
+    font-family: Courier New, monospace;
+    font-weight: lighter;
+    margin: 10px;
+}
+
+table {
+    margin: auto;
+    align-self: center;
+}
+
+th {
+    font-size: large;
+    font-weight: bold;
+}
+
+th, td {
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 40%;
+    text-align: center;
+}
+
+tr {
+    border-left: 1px solid white;
+
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center the menu items */
+    margin: 0;
+}
+
+nav ul li {
+    margin-right: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white; /* Make text white */
+    font-family: inherit; /* Match the font-family with the rest of the site */
+    padding: 10px 15px; /* Add some padding for better click area */
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background-color: lightblue; /* Highlight the active page in light blue */
+    color: black; /* Optional: Change text color on hover or active */
+}
