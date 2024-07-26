@@ -99,6 +99,8 @@ def set_date(date):
         c.execute("SELECT COUNT(*) FROM Songs;")
         count = c.fetchone()[0]
 
+        date = datetime.strptime(date, "%Y-%m-%d")
+
         for song in range(count):
             date_song_release = (date + timedelta(days=song)).strftime("%Y-%m-%d")
             c.execute("UPDATE Songs SET Date=? WHERE ID=?", (date_song_release, song + 1))
@@ -133,4 +135,4 @@ def get_song(title):
 
 
 if __name__ == "__main__":
-    set_date(datetime.today())
+    set_date("2024-07-20")

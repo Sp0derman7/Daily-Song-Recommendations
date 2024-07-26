@@ -24,6 +24,8 @@ def get_most_recent_song_before_date(date):
 def index():
     song_title, artist_name = get_most_recent_song_before_date('2024-07-27')
     print(song_title, artist_name)
+
+
     return render_template('index.html', song_title=song_title, artist_name=artist_name)
 
 
