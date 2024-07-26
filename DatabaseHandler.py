@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime, timedelta
+import random
 
 
 def create_table():
@@ -20,6 +21,39 @@ def create_table():
         if conn:
             conn.close()
             print("Connection closed")
+
+
+def shuffle_songs():
+    conn = None
+    try:
+        conn = sqlite3.connect('Songs.db')
+        c = conn.cursor()
+
+        # Retrieve all Date values from the Songs table
+        c.execute("SELECT ID FROM Songs;")
+        ids = [row[0] for row in c.fetchall()]
+
+        # Shuffle the Date values
+        random.shuffle(ids)
+
+        # Retrieve all rows from the Songs table
+        c.execute("SELECT * FROM Songs;")
+        rows = c.fetchall()
+
+        # Update the Songs table with the shuffled Date values
+        for i, row in enumerate(rows):
+            c.execute("UPDATE Songs SET ID=? WHERE Title=? AND Artist=? AND Time=? AND Date=?;",
+                      (ids[i], row[0], row[1], row[2], row[3]))
+
+        conn.commit()
+        print("Song dates shuffled successfully")
+
+    except sqlite3.Error as error:
+        print("Error: ", error)
+
+    finally:
+        if conn:
+            conn.close()
 
 
 def add_song(title, artist, time):
@@ -135,4 +169,4 @@ def get_song(title):
 
 
 if __name__ == "__main__":
-    set_date("2024-07-20")
+    set_date("2024-07-23")
