@@ -19,16 +19,10 @@ def song_now(current_date, current_time):
 
         c.execute("""SELECT Title, Artist, Time
                      FROM Songs
-                     WHERE Date <= ? AND Time <= ?
-                     ORDER BY Date DESC, Time DESC LIMIT 1;""", (current_date, current_time))
+                     WHERE Date < ? OR (Date = ? AND Time <= ?)
+                     ORDER BY Date DESC, Time DESC LIMIT 1;""", (current_date, current_date, current_time,))
         row = c.fetchone()
-
-        if not row:
-            c.execute("""SELECT Title, Artist, Time
-                         FROM Songs
-                         WHERE Date < ?
-                         ORDER BY Date DESC, Time DESC LIMIT 1;""", (current_date,))
-            row = c.fetchone()
+        print(row)
 
         return row if row else (None, None, None)
     except sqlite3.Error as error:
@@ -48,14 +42,14 @@ def time_till_next_song(current_date, current_time):
         c.execute("""SELECT Date, Time
                      FROM Songs
                      WHERE (Date = ? AND Time > ?) OR (Date > ?)
-                     ORDER BY Date, Time LIMIT 1;""", (current_date, current_time, current_date))
+                     ORDER BY Date, Time LIMIT 1;""", (current_date, current_time, current_date,))
         next_song = c.fetchone()
 
         if not next_song:
             c.execute("""SELECT Date, Time
                          FROM Songs
                          WHERE (Date = ? AND Time > ?) OR (Date > ?)
-                         ORDER BY Date, Time LIMIT 1;""", (current_date, current_time, current_date))
+                         ORDER BY Date, Time LIMIT 1;""", (current_date, current_time, current_date,))
             next_song = c.fetchone()
 
         if next_song:
@@ -87,8 +81,8 @@ def get_past_songs(current_date, current_time):
 
         c.execute("""SELECT Title, Artist, Date
                      FROM Songs
-                     WHERE Date < ? OR (Date = ? AND Time < ?)
-                     ORDER BY Date DESC, Time DESC;""", (current_date, current_date, current_time))
+                     WHERE Date < ? OR (Date = ? AND Time <= ?)
+                     ORDER BY Date DESC, Time DESC;""", (current_date, current_date, current_time,))
         rows = c.fetchall()
         return rows
     except sqlite3.Error as error:
@@ -104,6 +98,7 @@ def index():
     current_date = datetime.now(pytz.timezone('Europe/Amsterdam')).strftime("%Y-%m-%d")
     current_time = datetime.now(pytz.timezone('Europe/Amsterdam')).strftime("%H:%M")
     song_title, artist_name, time = song_now(current_date, current_time)
+    print(song_title)
     hours, minutes = time_till_next_song(current_date, current_time)
     return render_template('index.html',
                            song_title=song_title,
