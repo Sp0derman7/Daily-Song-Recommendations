@@ -2,11 +2,13 @@ import sqlite3
 from datetime import datetime, timedelta
 import random
 
+DATABASE = 'Songs.db'
+
 
 def create_table():
     conn = None
     try:
-        conn = sqlite3.connect('Songs.db')
+        conn = sqlite3.connect(DATABASE)
         c = conn.cursor()
         c.execute("""CREATE TABLE Songs (
                         Title TEXT,
@@ -26,7 +28,7 @@ def create_table():
 def shuffle_songs():
     conn = None
     try:
-        conn = sqlite3.connect('Songs.db')
+        conn = sqlite3.connect(DATABASE)
         c = conn.cursor()
 
         # Retrieve all Date values from the Songs table
@@ -59,7 +61,7 @@ def shuffle_songs():
 def add_song(title, artist, time):
     conn = None
     try:
-        conn = sqlite3.connect('Songs.db')
+        conn = sqlite3.connect(DATABASE)
         c = conn.cursor()
         c.execute(f"INSERT INTO Songs VALUES ('{title}', '{artist}', '{time}', 'Null', 'Null');")
         conn.commit()
@@ -99,7 +101,7 @@ def add_column(title, column_type):
 def remove_column(column_name):
     conn = None
     try:
-        conn = sqlite3.connect('Songs.db')
+        conn = sqlite3.connect(DATABASE)
         c = conn.cursor()
 
         # Get the existing columns except the one to be removed
@@ -152,7 +154,7 @@ def set_date(date):
 def get_song(title):
     conn = None
     try:
-        conn = sqlite3.connect('Songs.db')
+        conn = sqlite3.connect(DATABASE)
         c = conn.cursor()
         c.execute(f"SELECT * FROM Songs WHERE Title = '{title}';")
         rows = c.fetchall()
@@ -168,5 +170,24 @@ def get_song(title):
             print("Connection closed")
 
 
+def change_cell(change, column, row):
+    print("cell")
+    conn = None
+    try:
+        conn = sqlite3.connect(DATABASE)
+        c = conn.cursor()
+        c.execute(f"""
+        UPDATE Songs
+        SET {column} = {change}
+        WHERE ID = {row}
+        """)
+        print("changes made to cell")
+    except sqlite3.Error as error:
+        print("Error occurred while changing cell: ", error)
+
+    finally:
+        conn.close()
+
+
 if __name__ == "__main__":
-    set_date("2024-07-27")
+    get_song("Nathalie - Remasterisé en 2011")
